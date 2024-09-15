@@ -1,0 +1,32 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/payment
+    username: khalil_bk
+    password: khalil_bk
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  flyway:
+    baseline-on-migrate: true
+    enabled: true
+    baseline-description: "init"
+    baseline-version: 0
+    user: ${spring.datasource.username}
+    password: ${spring.datasource.password}
+
+  kafka:
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer  # Corrected here
+      properties:
+        spring.json.type.mapping: paymentConfirmation:com.khalil.payment.dto.PaymentNotificationRequest
+
+server:
+  port: 8060
+
+
+
